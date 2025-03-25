@@ -50,14 +50,11 @@ function Modal({ modal, projects }) {
     <>
       <motion.div ref={modalContainerRef} variants={scaleAnimation} initial="initial" animate={modal.active ? 'enter' : 'closed'} className={styles.modalContainer}>
         <div style={{ transform: `translateY(${modal.index * -100}%)` }} className={styles.modalSlider}>
-          {projects.map((project, index) => {
-            const { src, color } = project;
-            return (
-              <div className={styles.modal} style={{ backgroundColor: color }} key={`modal_${index}`}>
-                <img src={`/assets/${src}`} width="75%" height="auto" loading="lazy" alt={`Project ${index + 1}`} />
-              </div>
-            );
-          })}
+          {projects.map((project, index) => (
+            <div className={styles.modal} style={{ backgroundColor: project.color }} key={`modal_${index}`}>
+              <img src={`/assets/${project.src}`} width="75%" height="auto" loading="lazy" alt={`Project ${index + 1}`} />
+            </div>
+          ))}
         </div>
       </motion.div>
       <motion.div ref={cursorRef} className={styles.cursor} variants={scaleAnimation} initial="initial" animate={modal.active ? 'enter' : 'closed'} />
