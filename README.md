@@ -2,6 +2,8 @@
 
 A sleek React project gallery with an animated custom cursor and modal previews. This project demonstrates advanced CSS animations and React hooks for smooth tracking effects
 
+![Demonstration gif](gif.gif)
+
 [Live Demo](https://mousehovergallery.floriansimunek.com) | [Github Repository](https://github.com/floriansimunek/Mouse-Hover-Gallery) | [Inspiration](https://dennissnellenberg.com/)
 
 ## Features
