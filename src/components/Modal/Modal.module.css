@@ -7,6 +7,13 @@
   position: absolute;
   overflow: hidden;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 400ms cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+.modalContainer.active {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 400ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .modalSlider {
@@ -35,6 +42,13 @@
   position: absolute;
   z-index: 1;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 500ms cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+.cursor.active {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 500ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .cursorLabel {
@@ -44,4 +58,11 @@
   position: absolute;
   z-index: 2;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 450ms cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+.cursorLabel.active {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 450ms cubic-bezier(0.76, 0, 0.24, 1);
 }

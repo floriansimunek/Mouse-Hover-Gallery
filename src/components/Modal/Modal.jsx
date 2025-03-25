@@ -1,66 +1,67 @@
-import gsap from 'gsap';
-import { motion } from 'motion/react';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Modal.module.css';
 
-const ANIMATION_CONFIG = {
-  container: { duration: 0.8, ease: 'power3' },
-  cursor: { duration: 0.5, ease: 'power3' },
-  cursorLabel: { duration: 0.45, ease: 'power3' },
-  modal: {
-    initial: { scale: 0, x: '-50%', y: '-50%' },
-    enter: { scale: 1, x: '-50%', y: '-50%', transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] } },
-    closed: { scale: 0, x: '-50%', y: '-50%', transition: { duration: 0.4, ease: [0.32, 0, 0.67, 0] } },
-  },
-};
-
 function Modal({ modal, projects }) {
-  const modalContainerRef = useRef(null);
-  const cursorRef = useRef(null);
-  const cursorLabelRef = useRef(null);
-  const scaleAnimation = useMemo(() => ANIMATION_CONFIG.modal, []);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [labelPosition, setLabelPosition] = useState({ x: 0, y: 0 });
+  const animationFrameRef = useRef(null);
+
+  function lerp(start, end, factor) {
+    return start * (1 - factor) + end * factor;
+  }
 
   useEffect(() => {
-    const xMoveContainer = gsap.quickTo(modalContainerRef.current, 'left', ANIMATION_CONFIG.container);
-    const yMoveContainer = gsap.quickTo(modalContainerRef.current, 'top', ANIMATION_CONFIG.container);
-
-    const xMoveCursor = gsap.quickTo(cursorRef.current, 'left', ANIMATION_CONFIG.cursor);
-    const yMoveCursor = gsap.quickTo(cursorRef.current, 'top', ANIMATION_CONFIG.cursor);
-
-    const xMoveCursorLabel = gsap.quickTo(cursorLabelRef.current, 'left', ANIMATION_CONFIG.cursorLabel);
-    const yMoveCursorLabel = gsap.quickTo(cursorLabelRef.current, 'top', ANIMATION_CONFIG.cursorLabel);
-
-    const handleMouseMove = (e) => {
-      const { pageX, pageY } = e;
-
-      xMoveContainer(pageX);
-      yMoveContainer(pageY);
-      xMoveCursor(pageX);
-      yMoveCursor(pageY);
-      xMoveCursorLabel(pageX);
-      yMoveCursorLabel(pageY);
-    };
-
+    const handleMouseMove = (e) => setMousePosition({ x: e.pageX, y: e.pageY });
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const animatePositions = () => {
+      setModalPosition((prev) => ({
+        x: lerp(prev.x, mousePosition.x, 0.06),
+        y: lerp(prev.y, mousePosition.y, 0.06),
+      }));
+      setCursorPosition((prev) => ({
+        x: lerp(prev.x, mousePosition.x, 0.12),
+        y: lerp(prev.y, mousePosition.y, 0.12),
+      }));
+      setLabelPosition((prev) => ({
+        x: lerp(prev.x, mousePosition.x, 0.18),
+        y: lerp(prev.y, mousePosition.y, 0.18),
+      }));
+      animationFrameRef.current = requestAnimationFrame(animatePositions);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animatePositions);
+
+    return () => {
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [mousePosition]);
+
+  const containerClass = modal.active ? `${styles.modalContainer} ${styles.active}` : styles.modalContainer;
+  const cursorClass = modal.active ? `${styles.cursor} ${styles.active}` : styles.cursor;
+  const labelClass = modal.active ? `${styles.cursorLabel} ${styles.active}` : styles.cursorLabel;
+
   return (
     <>
-      <motion.div ref={modalContainerRef} variants={scaleAnimation} initial="initial" animate={modal.active ? 'enter' : 'closed'} className={styles.modalContainer}>
-        <div style={{ transform: `translateY(${modal.index * -100}%)` }} className={styles.modalSlider}>
+      <div className={containerClass} style={{ left: `${modalPosition.x}px`, top: `${modalPosition.y}px` }}>
+        <div className={styles.modalSlider} style={{ transform: `translateY(${modal.index * -100}%)` }}>
           {projects.map((project, index) => (
             <div className={styles.modal} style={{ backgroundColor: project.color }} key={`modal_${index}`}>
               <img src={`/assets/${project.src}`} width="75%" height="auto" loading="lazy" alt={`Project ${index + 1}`} />
             </div>
           ))}
         </div>
-      </motion.div>
-      <motion.div ref={cursorRef} className={styles.cursor} variants={scaleAnimation} initial="initial" animate={modal.active ? 'enter' : 'closed'} />
-      <motion.div ref={cursorLabelRef} className={styles.cursorLabel} variants={scaleAnimation} initial="initial" animate={modal.active ? 'enter' : 'closed'}>
+      </div>
+      <div className={cursorClass} style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }} />
+      <div className={labelClass} style={{ left: `${labelPosition.x}px`, top: `${labelPosition.y}px` }}>
         View
-      </motion.div>
+      </div>
     </>
   );
 }
