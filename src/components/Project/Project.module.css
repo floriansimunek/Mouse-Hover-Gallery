@@ -1,6 +1,11 @@
+.project * {
+  user-select: none;
+  pointer-events: none;
+}
+
 .project {
   width: 100%;
-  padding: 4rem 8rem;
+  padding: 1rem 2rem;
   border-top: 1px solid rgb(201, 201, 201);
   display: flex;
   justify-content: space-between;
@@ -18,7 +23,7 @@
 }
 
 .project h2 {
-  font-size: 4rem;
+  font-size: 1rem;
   margin: 0;
   font-weight: 400;
   transition: all 400ms;
@@ -35,4 +40,20 @@
 
 .project:hover p {
   transform: translateX(1rem);
+}
+
+@media screen and (min-width: 780px) {
+  .project h2 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .project {
+    padding: 4rem 8rem;
+  }
+
+  .project h2 {
+    font-size: 4rem;
+  }
 }
