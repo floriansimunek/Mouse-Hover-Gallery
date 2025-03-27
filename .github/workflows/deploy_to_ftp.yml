@@ -23,5 +23,5 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: mousehovergallery.floriansimunek.com/
+          server-dir: floriansimunek.com/projects/mousehovergallery/
           local-dir: dist/

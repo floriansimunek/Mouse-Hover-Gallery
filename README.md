@@ -4,7 +4,7 @@ A sleek React project gallery with an animated custom cursor and modal previews.
 
 ![Demonstration gif](gif.gif)
 
-[Live Demo](https://mousehovergallery.floriansimunek.com) | [Github Repository](https://github.com/floriansimunek/Mouse-Hover-Gallery) | [Inspiration](https://dennissnellenberg.com/)
+[Live Demo](https://floriansimunek.com/projects/mousehovergallery) | [Github Repository](https://github.com/floriansimunek/Mouse-Hover-Gallery) | [Inspiration](https://dennissnellenberg.com/)
 
 ## Features
 
