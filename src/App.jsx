@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import styles from './App.module.css';
+import image1 from './assets/c2montreal.png';
+import image3 from './assets/locomotive.png';
+import image2 from './assets/officestudio.png';
+import image4 from './assets/silencio.png';
 import Modal from './components/Modal';
 import Project from './components/Project';
 
@@ -7,22 +11,22 @@ function App() {
   const projects = [
     {
       title: 'C2 Montreal',
-      src: 'c2montreal.png',
+      src: image1,
       color: '#000000',
     },
     {
       title: 'Office Studio',
-      src: 'officestudio.png',
+      src: image2,
       color: '#8C8C8C',
     },
     {
       title: 'Locomotive',
-      src: 'locomotive.png',
+      src: image3,
       color: '#EFE8D3',
     },
     {
       title: 'Silencio',
-      src: 'silencio.png',
+      src: image4,
       color: '#706D63',
     },
   ];

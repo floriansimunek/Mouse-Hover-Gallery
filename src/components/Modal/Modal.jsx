@@ -53,7 +53,7 @@ function Modal({ modal, projects }) {
         <div className={styles.modalSlider} style={{ transform: `translateY(${modal.index * -100}%)` }}>
           {projects.map((project, index) => (
             <div className={styles.modal} style={{ backgroundColor: project.color }} key={`modal_${index}`}>
-              <img src={`/assets/${project.src}`} width="75%" height="auto" loading="lazy" alt={`Project ${index + 1}`} />
+              <img src={project.src} width="75%" height="auto" loading="lazy" alt={`Project ${index + 1}`} />
             </div>
           ))}
         </div>
